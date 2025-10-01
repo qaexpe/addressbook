@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('gitjob') {
+            steps {
+                echo 'git cloning'
+                git 'https://github.com/qaexpe/addressbook.git'
+            }
+        }
+        stage('buildjob') {
+            steps {
+                echo 'Complining the source code'
+                sh 'mvn compile'
+            }
+        }
+        stage('testjob') {
+            steps {
+                echo 'Testing the build'
+                sh 'mvn test'
+            }
+        }
+        stage('Deployjob') {
+            steps {
+                echo 'Deploying the build'
+                sh 'mvn install'
+                archiveArtifacts artifacts: 'target/addressbook.war', followSymlinks: false            }
+        }
+    }
+}
