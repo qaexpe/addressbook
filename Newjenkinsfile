@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+   parameters {
+  string defaultValue: '1', name: 'CLONE_GIT'
+}
     stages {
         stage('gitjob') {
             steps {
